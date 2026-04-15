@@ -1,0 +1,44 @@
+﻿{
+  "comments": {
+    "lineComment": "//",
+    "blockComment": ["(*", "*)"]
+  },
+  "brackets": [
+    ["(", ")"],
+    ["[", "]"],
+    ["{", "}"]
+  ],
+  "autoClosingPairs": [
+    { "open": "(", "close": ")" },
+    { "open": "[", "close": "]" },
+    { "open": "{", "close": "}" },
+    { "open": "\"", "close": "\"" },
+    { "open": "(*", "close": "*)" }
+  ],
+  "surroundingPairs": [
+    { "open": "(", "close": ")" },
+    { "open": "[", "close": "]" },
+    { "open": "\"", "close": "\"" }
+  ],
+  "folding": {
+    "markers": {
+      "start": "(?i)\\b(FOR|WHILE|REPEAT|IF|CASE)\\b",
+      "end": "(?i)\\b(END_FOR|END_WHILE|END_REPEAT|END_IF|END_CASE)\\b"
+    }
+  },
+  "wordPattern": "[#@]?[A-Za-z_][A-Za-z0-9_]*|#\\d+|@\\d+",
+  "indentationRules": {
+    "increaseIndentPattern": "\\b(IF|THEN|ELSE|ELSEIF|FOR|WHILE|DO|REPEAT|CASE)\\b",
+    "decreaseIndentPattern": "\\b(END_IF|END_FOR|END_WHILE|END_REPEAT|END_CASE|ELSE|ELSEIF)\\b"
+  },
+  "onEnterRules": [
+    {
+      "beforeText": "\\b(IF|THEN|FOR|WHILE|DO|REPEAT|CASE|ELSE|ELSEIF)\\b.*$",
+      "action": { "indent": "indent" }
+    },
+    {
+      "beforeText": "\\b(END_IF|END_FOR|END_WHILE|END_REPEAT|END_CASE)\\b.*$",
+      "action": { "indent": "outdent" }
+    }
+  ]
+}

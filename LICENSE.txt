@@ -1,0 +1,6 @@
+MIT License
+
+Copyright (c) 2024 Syntec Team
+
+本扩展仅供内部部门使用，禁止对外发布。
+This extension is for internal department use only.

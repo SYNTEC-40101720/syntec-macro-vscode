@@ -1,0 +1,13 @@
+# Development files — excluded from VSIX
+data/
+build/
+dist/
+*.vsix
+*.vsix.orig
+*.md
+!CHANGELOG.md
+!README.md
+LICENSE.txt
+*.ps1
+*.py
+test_*
