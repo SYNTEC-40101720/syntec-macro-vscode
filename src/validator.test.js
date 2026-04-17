@@ -1,6 +1,6 @@
-// validator.test.js - syntec-macro v1.3.4
+// validator.test.js - syntec-macro v1.3.5
 // 用法: node validator.test.js
-// 测试覆盖: IF/END_IF配对、CASE/END_CASE、REPEAT/UNTIL、中文字符检测、括号匹配
+// 测试覆盖: IF/END_IF配对、CASE/END_CASE、REPEAT/UNTIL、中文字符检测、括号匹配、替代关键字、EXIT、GOTO、%@MACRO
 
 const { validateDocument } = require('./validator');
 
@@ -94,10 +94,10 @@ console.log('\n[3] CASE/END_CASE');
 {
   eq('CASE OF END_CASE 正确', 'CASE #51 OF\nEND_CASE', []);
   eq('CASE OF DEFAULT值 END_CASE 正确',
-    'CASE #51 OF\nN10: GOTO N20\nDEFAULT:\nEND_CASE', []);
+    'CASE #51 OF\nN10:\nDEFAULT:\nEND_CASE', []);
   eq('CASE OF 缺少 END_CASE', 'CASE #51 OF',
     [['warning', 'CASE 块缺少对应的 END_']]);
-  eq('CASE 中 ELSE 正确', 'CASE #51 OF\nN10: GOTO N20\nELSE\nEND_CASE', []);
+  eq('CASE 中 ELSE 正确', 'CASE #51 OF\nN10:\nELSE\nEND_CASE', []);
 }
 
 // ============================================================
@@ -224,7 +224,67 @@ console.log('\n[11] 分号结尾关键字');
 // ============================================================
 console.log('\n[12] GOTO 标签');
 {
-  eq('GOTO 不影响 IF 配对', 'IF #1=1 THEN\nGOTO N10\nEND_IF', []);
+  eq('GOTO 不影响 IF 配对（目标N100存在，IF正常闭合）',
+    'IF #1=1 THEN\nGOTO N100\nEND_IF\nN100;',
+    []);
+  eq('GOTO N变量 目标存在不报错',
+    'N10;\nGOTO #10;\nN20;',
+    []);
+  eq('GOTO N变量 目标不存在报 warning',
+    'GOTO #10;',
+    [['warning', 'GOTO 目标 N10 不存在']]);
+  eq('GOTO 标签不存在报 warning',
+    'GOTO N99;',
+    [['warning', 'GOTO 目标 N99 不存在']]);
+  eq('GOTO 标签存在不报错', 'N99;\nGOTO N99;', []);
+}
+
+// ============================================================
+// 13. 替代关键字（不带下划线）
+// ============================================================
+console.log('\n[13] 替代关键字（不带下划线）');
+{
+  eq('ENDIF 等效于 END_IF', 'IF #1=1 THEN\nENDIF', []);
+  eq('ENDFOR 等效于 END_FOR', 'FOR #1=1 TO 10 DO\nENDFOR', []);
+  eq('ENDCASE 等效于 END_CASE', 'CASE #51 OF\nENDCASE', []);
+  eq('ENDWHILE 等效于 END_WHILE', 'WHILE #1=1 DO\nENDWHILE', []);
+  eq('ENDREPEAT 等效于 END_REPEAT', 'REPEAT\nUNTIL #1=1 ENDREPEAT', []);
+  eq('混用标准与替代形式 正确',
+    'IF #1=1 THEN\nFOR #2=1 TO 10 DO\nENDFOR\nENDIF', []);
+}
+
+// ============================================================
+// 14. EXIT 跳出
+// ============================================================
+console.log('\n[14] EXIT 跳出');
+{
+  eq('EXIT 跳出 FOR 后不应有 ENDFOR（EXIT 已退出循环）',
+    'FOR #1=1 TO 10 DO\nIF #1=5 THEN\nEXIT\nEND_IF\nENDFOR',
+    [['error','ENDFOR 没有匹配的 FOR']]);
+  eq('EXIT 跳出 WHILE 后不应有 END_WHILE（EXIT 已退出循环）',
+    'WHILE #1=1 DO\nEXIT\nEND_WHILE',
+    [['error','END_WHILE 没有匹配的 WHILE']]);
+  eq('EXIT 在 REPEAT 内（EXIT 已退出循环，UNTIL 报错 REPEAT 不匹配）',
+    'REPEAT\nEXIT\nUNTIL #1=1 END_REPEAT',
+    [['error','UNTIL 没有匹配的 REPEAT']]);
+  eq('EXIT 单独出现 不报错（允许在最外层使用）',
+    'EXIT', []);
+}
+
+// ============================================================
+// 15. %@MACRO 文件头检查
+// ============================================================
+console.log('\n[15] %@MACRO 文件头检查');
+{
+  eq('有 %@MACRO 不报 warning',
+    '%@MACRO\nIF #1=1 THEN\nEND_IF', []);
+  eq('仅有 % 无 %@MACRO 报 warning',
+    '%\nG01 X100.;',
+    [['warning', '此文件缺少 %@MACRO 文件头']]);
+  eq('注释行后出现 %@MACRO 不报错',
+    '// 这是一个MACRO程序\n%@MACRO\nIF #1=1 THEN\nEND_IF', []);
+  eq('ISO格式文件不强制要求 %@MACRO',
+    'G01 X100.;\nM30;', []);
 }
 
 // ============================================================

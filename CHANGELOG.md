@@ -1,23 +1,35 @@
+## [1.3.5] - 2026-04-17
+
+### 规范对齐（依据 MACRO开发应用手册）
+
+**新增关键字支持**
+- 替代关键字（不带下划线）：`ENDIF` / `ENDFOR` / `ENDWHILE` / `ENDCASE` / `ENDREPEAT`
+- `ELSIF`（IF 分支关键字）
+- `EXIT`（跳出循环块）
+
+**新增诊断规则**
+- `%@MACRO` 文件头检查：第一行非注释且为裸 `%`（非 `%@MACRO`）时报 warning
+- `GOTO` 标签验证：引用目标 `Nxxx` 不存在时报 warning（支持 `GOTO N数字` 和 `GOTO #变量` 两种形式）
+- N标签行格式：`N数字;` 或 `N数字:`（同行含 `GOTO Nxx` 时不误判为标签）
+
+**架构改进**
+- `getKeywordPositions` 改用下划线占位法解决 `ENDREPEAT`/`REPEAT` 子串冲突
+- EXIT 跳出循环时标记嵌套 IF 为 `exited`，避免误报未闭合
+
+### 文档
+- 新增 `MACRO开发应用手册.md` 和 `Macro变数规格.md`（用户提供的完整参考手册）
+
 ## [1.3.4] - 2026-04-17
 
 ### 新增
 - 支持 `.nc` 文件类型
-- 新增 validator 单元测试（51个测试用例，覆盖 IF/FOR/WHILE/REPEAT/CASE 配对、CJK检测、括号匹配）
+- 新增 validator 单元测试（51个测试用例）
 
 ### Bug 修复
-- `MSG("END_IF")` 字符串内的关键字被误报（`stripCommentsAndStrings` 不去除字符串内容）
-- 嵌套块缺少 END 时，嵌套的内层块 warning 被吞掉（`splice` 一起弹出改为只弹1个）
-- `ELSE` 后接 `ELSEIF` 时，`ELSEIF` 误匹配到之前的 IF（新增 `hasElse` 标记）
-- 相邻多个 CJK 字符报多条相同错误（改为每行同类只报一条）
-
-### 改进
-- README 精简：只保留功能列表和文件类型
-- 删除冗余根目录 `Syntec Macro.tmLanguage`（已由 `syntaxes/` 替代）
-- Snippet prefix `"/*"` 改为 `"bc"`（避免与其他语言冲突）
-- 移除 snippet 中的手动 `\t` 前缀（让 VSCode 自动处理缩进）
-- 变量补全加入常用大号变量（`#100/#500/#1000/#9901~9906`）
-- 移除 `colorDecorators: false` 全局覆盖（由用户自行配置）
-- `functions.js` / `keywords.js` 版本注释同步为 `v1.3.4`
+- `MSG("END_IF")` 字符串内的关键字被误报
+- 嵌套块缺少 END 时内层 warning 被吞掉
+- `ELSE` 后接 `ELSEIF` 时误匹配
+- 相邻多个 CJK 字符报多条重复 error
 
 ---
 
