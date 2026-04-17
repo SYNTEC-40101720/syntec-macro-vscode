@@ -69,10 +69,19 @@ function provideCompletionItems(document, position) {
 
   // 变量片段（#）
   if (textBefore.endsWith('#')) {
+    // 常用局部变量 #1~#20
     for (let i = 1; i <= 20; i++) {
       const item = new vscode.CompletionItem('#' + i, vscode.CompletionItemKind.Variable);
       item.detail = '局部变量 #' + i;
       item.insertText = String(i);
+      items.push(item);
+    }
+    // 常用大号变量
+    const bigVars = [100, 500, 1000, 2000, 9901, 9902, 9903, 9904, 9905, 9906];
+    for (const v of bigVars) {
+      const item = new vscode.CompletionItem('#' + v, vscode.CompletionItemKind.Variable);
+      item.detail = '局部变量 #' + v;
+      item.insertText = String(v);
       items.push(item);
     }
   }

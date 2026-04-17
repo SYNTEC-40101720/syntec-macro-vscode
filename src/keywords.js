@@ -1,4 +1,4 @@
-// syntec-macro v1.2.0 - keywords.js
+// syntec-macro v1.3.4 - keywords.js
 // 关键字、常量、控制流、变量格式定义
 
 exports.keywords = {
