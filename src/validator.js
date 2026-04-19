@@ -88,6 +88,16 @@ function getKeywordPositions(line) {
     'TO', 'BY', 'DO', 'OF',
     'GOTO', 'CALL', 'RETURN',
   ];
+  // 检测不支持的语法
+  const unsupportedKws = ['ELSIF'];
+  for (const kw of unsupportedKws) {
+    const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp('\\b' + escaped + '\\b', 'g');
+    let m;
+    while ((m = re.exec(s)) !== null) {
+      positions.push({ keyword: kw, col: m.index, endCol: m.index + kw.length, unsupported: true });
+    }
+  }
   for (const kw of shortKws) {
     const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const re = new RegExp('\\b' + escaped + '\\b', 'g');
@@ -192,6 +202,18 @@ function validateDocument(content) {
 
     for (const pos of positions) {
       const kw = pos.keyword;
+
+      // --- 不支持的语法 ---
+      if (pos.unsupported) {
+        let msg = '';
+        if (kw === 'ELSIF') msg = 'ELSIF 不支持，请使用 ELSEIF';
+        else msg = `${kw} 是不支持的语法`;
+        diagnostics.push({
+          line: lineNum, col: pos.col, endCol: pos.endCol,
+          msg, severity: 'error',
+        });
+        continue;
+      }
 
       // --- 开启关键字 ---
       if (OPENER_KEYWORDS.has(kw)) {
