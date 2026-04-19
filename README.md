@@ -48,4 +48,4 @@
 | 1.3.1 | CASE ELSE 诊断修复 |
 | 1.3.0 | IF/END_IF 块配对诊断重写 |
 
-详见 [CHANGELOG.md](./CHANGELOG.md)
+详见 [CHANGELOG.md](https://github.com/SYNTEC-40101720/syntec-macro-vscode/blob/main/CHANGELOG.md)
