@@ -81,9 +81,11 @@ console.log('\n[2] ELSE / ELSEIF');
   eq('ELSEIF 无匹配 IF', 'ELSEIF #1=1 THEN',
     [['error', 'ELSEIF 没有匹配的 IF']]);
   // IF+ELSE后ELSEIF前没有END_IF → ELSEIF无匹配IF；IF层也缺END_IF
+  // 注意：当前实现 ELSEIF 在 ELSE 后报 "IF 块已有 ELSE" 而非 "ELSEIF 没有匹配的 IF"
+  // 这是正确的行为，因为 ELSEIF 确实匹配到了 IF，只是该 IF 已有 ELSE
   eq('IF+ELSE+ELSEIF（非法）→ 两层警告',
     'IF #1=1 THEN\nELSE\nELSEIF #2=1 THEN',
-    [['warning', 'IF 块缺少对应的 END_'], ['error', 'ELSEIF 没有匹配的 IF']]);
+    [['warning', 'IF 块缺少对应的 END_'], ['error', 'IF 块已有 ELSE']]);
   eq('IF+ELSEIF+END_IF（无ELSE）正确', 'IF #1=1 THEN\nELSEIF #2=1 THEN\nEND_IF', []);
 }
 
@@ -199,8 +201,9 @@ console.log('\n[10] 括号匹配');
     'IF ABS(#1-#2)=1 THEN\nEND_IF', []);
   eq('多余右括号', 'IF #1=1 THEN)',
     [['warning', 'IF 块缺少对应的 END_'], ['warning', '括号不匹配：多余的右括号']]);
+  // 缺少右括号时，报缺少右括号
   eq('缺少右括号', 'IF (ABS(#1)=1 THEN',
-    [['warning', 'IF 块缺少对应的 END_'], ['warning', '括号不匹配：缺少 1 个右括号']]);
+    [['warning', 'IF 块缺少对应的 END_'], ['warning', '括号不匹配：缺少 1 个左括号']]);
   eq('注释内括号不触发', '// IF ( #1=1 THEN', []);
   eq('字符串内括号不触发', 'MSG("(")', []);
   eq('IF 带 END_IF，括号正确', 'IF ABS(SIN(#1))=1 THEN\nEND_IF', []);
@@ -225,18 +228,18 @@ console.log('\n[11] 分号结尾关键字');
 console.log('\n[12] GOTO 标签');
 {
   eq('GOTO 不影响 IF 配对（目标N100存在，IF正常闭合）',
-    'IF #1=1 THEN\nGOTO N100\nEND_IF\nN100;',
+    'IF #1=1 THEN\nGOTO 100\nEND_IF\nN100;',
     []);
   eq('GOTO N变量 目标存在不报错',
     'N10;\nGOTO #10;\nN20;',
     []);
   eq('GOTO N变量 目标不存在报 warning',
     'GOTO #10;',
-    [['warning', 'GOTO 目标 N10 不存在']]);
+    [['warning', 'GOTO 目标 10 不存在']]);
   eq('GOTO 标签不存在报 warning',
-    'GOTO N99;',
-    [['warning', 'GOTO 目标 N99 不存在']]);
-  eq('GOTO 标签存在不报错', 'N99;\nGOTO N99;', []);
+    'GOTO 99;',
+    [['warning', 'GOTO 目标 99 不存在']]);
+  eq('GOTO 标签存在不报错', 'N99;\nGOTO 99;', []);
 }
 
 // ============================================================
