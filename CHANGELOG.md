@@ -1,3 +1,30 @@
+## [1.3.7] - 2026-04-20
+
+### 第一性原理排查修复
+
+**移除不存在的语法**
+- 移除 INT() 函数（控制器不支持，从 functions.js / tmLanguage 删除）
+- 移除 CALL / RETURN 关键字（控制器不支持，仅 M98 P10 调子程序）
+
+**snippet 修正**
+- IF 默认 snippet 改为仅 IF/END_IF（prefix: `if`），含 ELSEIF 版改为 `ife`
+- REPEAT snippet 补全 END_REPEAT（控制器要求三要素缺一不可）
+- macro 模板 N10 改为 N10;（分号结尾才合法）
+
+**数据一致性修复**
+- GOTO Hover 文档修正：`GOTO 100;`（不带 N），目标 `N100;`
+- GOTO 跳转定义修正：匹配 `GOTO 数字` → 跳转到 `N数字` 行
+- 括号匹配消息修正：缺少 `)` 报"缺少右括号"而非"缺少左括号"
+- 替代关键字高亮：ENDIF/ENDFOR/ENDWHILE/ENDCASE/ENDREPEAT 加入 tmLanguage
+- extension.js 中文乱码全部修复（完整重写）
+- 状态栏版本号同步 1.3.7
+
+**配置修复**
+- package.json repository URL 指向正确仓库
+- .vscodeignore 排除 macro-samples/ 和 G0915，VSIX 体积从 65KB 缩减
+
+---
+
 ## [1.3.6] - 2026-04-19
 
 ### 规范修正（依据控制器实测）

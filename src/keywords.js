@@ -1,4 +1,4 @@
-// syntec-macro v1.3.4 - keywords.js
+// syntec-macro v1.3.7 - keywords.js
 // 关键字、常量、控制流、变量格式定义
 
 exports.keywords = {
@@ -7,7 +7,7 @@ exports.keywords = {
   while:       ['WHILE', 'DO', 'END_WHILE'],
   for:         ['FOR', 'TO', 'BY', 'END_FOR'],
   case:        ['CASE', 'OF', 'END_CASE'],
-  flow:        ['GOTO', 'EXIT', 'CALL', 'RETURN'],
+  flow:        ['GOTO', 'EXIT'],
   operators:   ['AND', 'OR', 'XOR', 'NOT', 'MOD', 'DIV'],
   endCodes:    ['M99', 'M30', 'M02'],
   gcodes: [

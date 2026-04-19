@@ -1,4 +1,4 @@
-// syntec-macro v1.3.4 - functions.js
+// syntec-macro v1.3.7 - functions.js
 // 内置函数完整定义：补全数据 + Hover文档
 
 exports.functions = [
@@ -63,9 +63,7 @@ exports.functions = [
   { name: 'SETREG',   sig: 'SETREG(regNo, val)', doc: '设置寄存器值\nSETREG(1, 100)' },
 
   // ===== 宏程序调用 =====
-  { name: 'CALL', sig: 'CALL(subNo)',       doc: '调用子程序\nCALL(100) → 执行G0100\n返回后继续执行' },
-  { name: 'RETURN', sig: 'RETURN',          doc: '从子程序返回\n放在子程序末尾，效果同M99' },
-  { name: 'GOTO',  sig: 'GOTO label',       doc: '跳转到标签\nGOTO N100' },
+  { name: 'GOTO',  sig: 'GOTO label',       doc: '跳转到N标签行\nGOTO 100; → 跳转到 N100;\n注意：不带N前缀，目标标签必须以分号结尾' },
 
   // ===== 刀具/坐标系 =====
   { name: 'TOOLSET', sig: 'TOOLSET(toolNo)', doc: '设置当前刀具号\nTOOLSET(5) → 切换到5号刀' },
@@ -103,9 +101,6 @@ exports.functions = [
   { name: 'PUSH',   sig: 'PUSH(value)',      doc: '将值压入堆栈\nPUSH(#1)' },
   { name: 'POP',    sig: 'POP()',            doc: '弹出堆栈顶端值\n#1 := POP()' },
   { name: 'STKTOP', sig: 'STKTOP()',         doc: '读取堆栈顶端值（不弹出）\n#1 := STKTOP()' },
-
-  // ===== 数据类型 =====
-  { name: 'INT',   sig: 'INT(num)',          doc: '转换为整数（截断小数）\nINT(3.9) → 3\n注意: INT vs STR2INT\n  INT()   - 数字→整数（数学运算）\n  STR2INT - 字符串→数字（解析文本）' },
 
   // ===== 刀具路径 =====
   { name: 'ARC',   sig: 'ARC(X, Y, I, J)',   doc: '绘制圆弧路径（仿真）\nARC(X, Y, I, J)\nI,J=圆心相对坐标' },

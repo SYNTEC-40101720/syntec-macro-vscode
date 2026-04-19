@@ -1,6 +1,6 @@
 {
   "IF 语句（带 ELSEIF 和 ELSE）": {
-    "prefix": "if",
+    "prefix": "ife",
     "body": [
       "IF ${1:条件} THEN",
       "${2:// 代码}",
@@ -13,7 +13,7 @@
     "description": "IF 条件语句（含 ELSEIF / ELSE）"
   },
   "IF 语句（简化版）": {
-    "prefix": "ifs",
+    "prefix": "if",
     "body": [
       "IF ${1:条件} THEN",
       "${2:// 代码}",
@@ -44,9 +44,10 @@
     "body": [
       "REPEAT",
       "${1:// 代码}",
-      "UNTIL ${2:条件}"
+      "UNTIL ${2:条件}",
+      "END_REPEAT"
     ],
-    "description": "REPEAT 循环（先执行后判断）"
+    "description": "REPEAT 循环（先执行后判断，必须以 END_REPEAT 结尾）"
   },
   "CASE 选择": {
     "prefix": "case",
@@ -94,7 +95,7 @@
       "// ===== 变量声明 =====",
       "// ${7:// 在此声明局部变量和参数}",
       "",
-      "N10",
+      "N10;",
       "${8:// 主程序代码}",
       "",
       "M99  // 程序结束返回"

@@ -25,23 +25,23 @@
       "name": "keyword.control.end.syntec-macro"
     },
     {
-      "match": "\\b(IF|THEN|ELSE|ELSEIF|END_IF)\\b",
+      "match": "\\b(IF|THEN|ELSE|ELSEIF|END_IF|ENDIF)\\b",
       "name": "keyword.control.conditional.syntec-macro"
     },
     {
-      "match": "\\b(REPEAT|UNTIL|END_REPEAT)\\b",
+      "match": "\\b(REPEAT|UNTIL|END_REPEAT|ENDREPEAT)\\b",
       "name": "keyword.control.repeat.syntec-macro"
     },
     {
-      "match": "\\b(WHILE|DO|END_WHILE)\\b",
+      "match": "\\b(WHILE|DO|END_WHILE|ENDWHILE)\\b",
       "name": "keyword.control.while.syntec-macro"
     },
     {
-      "match": "\\b(FOR|TO|BY|END_FOR)\\b",
+      "match": "\\b(FOR|TO|BY|END_FOR|ENDFOR)\\b",
       "name": "keyword.control.for.syntec-macro"
     },
     {
-      "match": "\\b(CASE|OF|END_CASE)\\b",
+      "match": "\\b(CASE|OF|END_CASE|ENDCASE)\\b",
       "name": "keyword.control.case.syntec-macro"
     },
     {
@@ -89,7 +89,7 @@
       "name": "support.function.check.syntec-macro"
     },
     {
-      "match": "\\b(PUSH|POP|STKTOP|AXID|INT)\\b",
+      "match": "\\b(PUSH|POP|STKTOP|AXID)\\b",
       "name": "support.function.misc.syntec-macro"
     },
     {

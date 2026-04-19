@@ -203,7 +203,7 @@ console.log('\n[10] 括号匹配');
     [['warning', 'IF 块缺少对应的 END_'], ['warning', '括号不匹配：多余的右括号']]);
   // 缺少右括号时，报缺少右括号
   eq('缺少右括号', 'IF (ABS(#1)=1 THEN',
-    [['warning', 'IF 块缺少对应的 END_'], ['warning', '括号不匹配：缺少 1 个左括号']]);
+    [['warning', 'IF 块缺少对应的 END_（文件结束）'], ['warning', '括号不匹配：缺少 1 个右括号']]);
   eq('注释内括号不触发', '// IF ( #1=1 THEN', []);
   eq('字符串内括号不触发', 'MSG("(")', []);
   eq('IF 带 END_IF，括号正确', 'IF ABS(SIN(#1))=1 THEN\nEND_IF', []);

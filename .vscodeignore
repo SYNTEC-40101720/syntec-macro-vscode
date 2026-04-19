@@ -2,6 +2,9 @@
 data/
 build/
 dist/
+macro-samples/
+G0915
+MACRO*.md
 *.vsix
 *.vsix.orig
 *.md
