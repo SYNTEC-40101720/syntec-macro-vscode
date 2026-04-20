@@ -56,7 +56,8 @@
         "editor.autoIndent": "advanced",
         "editor.comment": "//",
         "editor.blockCommentStart": "(*",
-        "editor.blockCommentEnd": "*)"
+        "editor.blockCommentEnd": "*)",
+        "editor.colorDecorators": false
       }
     },
     "configuration": {
