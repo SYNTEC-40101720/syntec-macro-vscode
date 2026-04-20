@@ -1,6 +1,11 @@
 MIT License
 
-Copyright (c) 2024 Syntec Team
+Copyright (c) 2026 Syntec Team
 
-本扩展仅供内部部门使用，禁止对外发布。
-This extension is for internal department use only.
+Disclaimer:
+This software is a personal hobby project created by an individual developer.
+It is NOT an official product of any company or organization.
+Use at your own discretion.
+
+免责声明：
+本软件为个人兴趣项目，非官方出品，请自行判断使用。
