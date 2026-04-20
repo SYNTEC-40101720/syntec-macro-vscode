@@ -1,4 +1,4 @@
-// syntec-macro v1.3.7 - extension.js
+// syntec-macro v1.4.0 - extension.js
 // VSCode 扩展主入口：提供 IntelliSense / Hover / 诊断
 
 const vscode = require('vscode');
@@ -329,7 +329,7 @@ function activate(context) {
   const statusBar = vscode.window.createStatusBarItem(
     vscode.StatusBarAlignment.right, 100
   );
-  statusBar.text = ' Syntec Macro v1.3.7';
+  statusBar.text = ' Syntec Macro v1.4.0';
   statusBar.tooltip = '新代宏程序扩展已激活';
   statusBar.show();
   context.subscriptions.push(statusBar);
