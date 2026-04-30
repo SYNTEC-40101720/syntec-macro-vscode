@@ -1,12 +1,12 @@
-// syntec-macro v1.3.7 - keywords.js
+// syntec-macro v1.4.1 - keywords.js
 // 关键字、常量、控制流、变量格式定义
 
 exports.keywords = {
-  conditional: ['IF', 'THEN', 'ELSE', 'ELSEIF', 'END_IF'],
-  repeat:      ['REPEAT', 'UNTIL', 'END_REPEAT'],
-  while:       ['WHILE', 'DO', 'END_WHILE'],
-  for:         ['FOR', 'TO', 'BY', 'END_FOR'],
-  case:        ['CASE', 'OF', 'END_CASE'],
+  conditional: ['IF', 'THEN', 'ELSE', 'ELSEIF', 'END_IF', 'ENDIF'],
+  repeat:      ['REPEAT', 'UNTIL', 'END_REPEAT', 'ENDREPEAT'],
+  while:       ['WHILE', 'DO', 'END_WHILE', 'ENDWHILE'],
+  for:         ['FOR', 'TO', 'BY', 'END_FOR', 'ENDFOR'],
+  case:        ['CASE', 'OF', 'END_CASE', 'ENDCASE'],
   flow:        ['GOTO', 'EXIT'],
   operators:   ['AND', 'OR', 'XOR', 'NOT', 'MOD', 'DIV'],
   endCodes:    ['M99', 'M30', 'M02'],

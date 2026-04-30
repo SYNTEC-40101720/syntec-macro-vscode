@@ -1,24 +1,26 @@
 import json, os
 
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 snippets = {
     "IF 语句（带 ELSEIF 和 ELSE）": {
-        "prefix": "if",
+        "prefix": "ife",
         "body": [
             "IF ${1:条件} THEN",
-            "\t${2:// 代码}",
+            "${2:// 代码}",
             "ELSEIF ${3:条件} THEN",
-            "\t${4:// 代码}",
+            "${4:// 代码}",
             "ELSE",
-            "\t${5:// 代码}",
+            "${5:// 代码}",
             "END_IF"
         ],
         "description": "IF 条件语句（含 ELSEIF / ELSE）"
     },
     "IF 语句（简化版）": {
-        "prefix": "ifs",
+        "prefix": "if",
         "body": [
             "IF ${1:条件} THEN",
-            "\t${2:// 代码}",
+            "${2:// 代码}",
             "END_IF"
         ],
         "description": "IF 条件语句（仅 IF/END_IF）"
@@ -27,7 +29,7 @@ snippets = {
         "prefix": "for",
         "body": [
             "FOR ${1:#i} = ${2:1} TO ${3:10} BY ${4:1} DO",
-            "\t${5:// 代码}",
+            "${5:// 代码}",
             "END_FOR"
         ],
         "description": "FOR 循环（从起始到终止，步进执行）"
@@ -36,7 +38,7 @@ snippets = {
         "prefix": "while",
         "body": [
             "WHILE ${1:条件} DO",
-            "\t${2:// 代码}",
+            "${2:// 代码}",
             "END_WHILE"
         ],
         "description": "WHILE 循环（条件为真时重复执行）"
@@ -45,18 +47,19 @@ snippets = {
         "prefix": "repeat",
         "body": [
             "REPEAT",
-            "\t${1:// 代码}",
-            "UNTIL ${2:条件}"
+            "${1:// 代码}",
+            "UNTIL ${2:条件}",
+            "END_REPEAT"
         ],
-        "description": "REPEAT 循环（先执行后判断）"
+        "description": "REPEAT 循环（先执行后判断，必须以 END_REPEAT 结尾）"
     },
     "CASE 选择": {
         "prefix": "case",
         "body": [
             "CASE ${1:#变量} OF",
-            "\t${2:值1}: ${3:// 代码}",
-            "\t${4:值2}: ${5:// 代码}",
-            "\tDEFAULT: ${6:// 代码}",
+            "${2:值1}: ${3:// 代码}",
+            "${4:值2}: ${5:// 代码}",
+            "DEFAULT: ${6:// 代码}",
             "END_CASE"
         ],
         "description": "CASE 多分支选择语句"
@@ -90,7 +93,7 @@ snippets = {
             "// ===== 变量声明 =====",
             "// ${7:// 在此声明局部变量和参数}",
             "",
-            "N10",
+            "N10;",
             "${8:// 主程序代码}",
             "",
             "M99  // 程序结束返回"
@@ -203,7 +206,7 @@ snippets = {
         "description": "设置刀具路径绘图（仿真用）"
     },
     "块注释": {
-        "prefix": "/*",
+        "prefix": "bc",
         "body": ["(* ${1:注释内容} *)"],
         "description": "块注释 (* *)"
     },
@@ -234,7 +237,7 @@ snippets = {
     }
 }
 
-out_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "snippets")
+out_dir = os.path.join(ROOT_DIR, "snippets")
 os.makedirs(out_dir, exist_ok=True)
 out = os.path.join(out_dir, "syntec-macro.json")
 with open(out, "w", encoding="utf-8") as f:

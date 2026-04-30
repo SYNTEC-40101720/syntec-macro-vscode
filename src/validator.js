@@ -1,4 +1,4 @@
-// syntec-macro v1.4.0 - validator.js
+// syntec-macro v1.4.1 - validator.js
 // 语法诊断：括号匹配、IF/END_IF配对、控制流检查、中文字符检测
 // v1.3.6: 修复 GOTO 语法（GOTO 100 而非 GOTO N100），移除 INT 函数，修正 N 标签格式
 // v1.3.6: 修复所有中文乱码
@@ -120,22 +120,21 @@ function isMacroHeaderLine(line) {
   return /^%@MACRO$/i.test(line.trim());
 }
 
-// 检查一行是否 N标签（行首单独出现 N+数字，后面跟分号或冒号）
-// 支持: N10;  N10:  N10  (不匹配 GOTO N10 等含其他内容的行)
+// 检查一行是否 N标签（行首单独出现 N+数字，且以分号结尾）
 // 实测：N100; 才合法，N100: 和裸 N100 都报错
 function isNLabelLine(line) {
   const t = line.trim();
-  // 行首 N + 数字 + 可选分号/冒号/纯行尾，排除 GOTO/IF/FOR 等复合行
+  // 行首 N + 数字 + 分号，排除 GOTO/IF/FOR 等复合行
   return /^N(\d+)\s*;/.test(t) &&
     !/^(IF|FOR|WHILE|CASE|REPEAT|ELSEIF|ELSE|GOTO)/i.test(t);
 }
 
-// 提取 GOTO 目标：GOTO 100 或 GOTO #2
-// 实测：GOTO 100; 不带 N，GOTO #变量 变量必须是整数
+// 提取静态 GOTO 目标：GOTO 100
+// GOTO #变量 是运行期跳转，无法静态验证目标标签是否存在
 function extractGotoTarget(line) {
-  // 匹配 GOTO 数字 或 GOTO #数字
-  const m = line.match(/\bGOTO\s+(\d+)(?!\w)|GOTO\s+#(\d+)/i);
-  if (m) return m[1] || m[2] || null;
+  const clean = stripCommentsAndStrings(line);
+  const m = clean.match(/\bGOTO\s+(\d+)(?!\w)/i);
+  if (m) return m[1] || null;
   return null;
 }
 
@@ -349,12 +348,13 @@ function validateDocument(content) {
     for (let ci = 0; ci < raw.length; ci++) {
       if (!inStr && !inBC && raw.substring(ci, ci + 2) === '//') break;
       if (!inStr && raw.substring(ci, ci + 2) === '(*') {
-        const end = raw.indexOf('*)', ci + 2);
-        ci = end >= 0 ? end + 1 : raw.length - 1;
-        inBC = true; continue;
+        inBC = true; ci++; continue;
       }
-      if (inBC && raw.substring(ci, ci + 2) === '*)') {
-        inBC = false; ci++; continue;
+      if (inBC) {
+        if (raw.substring(ci, ci + 2) === '*)') {
+          inBC = false; ci++;
+        }
+        continue;
       }
       if (raw[ci] === '"') { inStr = !inStr; continue; }
       if (inStr || inBC) continue;

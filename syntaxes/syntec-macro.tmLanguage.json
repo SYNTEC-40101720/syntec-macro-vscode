@@ -16,11 +16,6 @@
       "name": "comment.block.stars.syntec-macro"
     },
     {
-      "begin": "\\(",
-      "end": "\\)",
-      "name": "comment.block.paren.syntec-macro"
-    },
-    {
       "match": "\\b(M99|M30|M02)\\b",
       "name": "keyword.control.end.syntec-macro"
     },
@@ -61,27 +56,31 @@
       "name": "keyword.operator.comparison.syntec-macro"
     },
     {
+      "match": "=",
+      "name": "keyword.operator.assignment.syntec-macro"
+    },
+    {
       "match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COS|SIN|TAN|CEIL|FLOOR|ROUND|SQRT|EXP|LN|LOG|POW|MAX|MIN|SIGN|RANDOM)\\b",
       "name": "support.function.math.syntec-macro"
     },
     {
-      "match": "\\b(STR2INT|SCANTEXT)\\b",
+      "match": "\\b(STR2INT|SCANTEXT|CHR|LEN|MID|STR|FORMAT)\\b",
       "name": "support.function.string.syntec-macro"
     },
     {
-      "match": "\\b(OPEN|CLOSE|PRINT|GETARG|GETTRAPARG|PARAM)\\b",
+      "match": "\\b(OPEN|CLOSE|PRINT|READ|EXIST|DELETE|RENAME|GETARG|GETTRAPARG|PARAM)\\b",
       "name": "support.function.io.syntec-macro"
     },
     {
-      "match": "\\b(READDI|READDO|READABIT|SETDO|SETABIT|READRREGBIT|SETRREGBIT)\\b",
+      "match": "\\b(READDI|READDO|READABIT|SETDO|SETABIT|READRREGBIT|SETRREGBIT|READREG|SETREG)\\b",
       "name": "support.function.io.rw.syntec-macro"
     },
     {
-      "match": "\\b(DBOPEN|DBCLOSE|DBNEW|DBLOAD|DBSAVE|DBINSERT|DBDELETE)\\b",
+      "match": "\\b(DBOPEN|DBCLOSE|DBNEW|DBLOAD|DBSAVE|DBINSERT|DBDELETE|DBEDIT)\\b",
       "name": "support.function.db.syntec-macro"
     },
     {
-      "match": "\\b(ALARM|MSG|WAIT|SLEEP|SYSVAR|SYSDATA|DRVDATA|STD|STDAX)\\b",
+      "match": "\\b(ALARM|MSG|WAIT|SLEEP|SYSVAR|SYSDATA|DRVDATA|STD|STDAX|TOOLSET|SETCO)\\b",
       "name": "support.function.system.syntec-macro"
     },
     {
@@ -95,6 +94,10 @@
     {
       "match": "\\b(SETDRAW|DRAWHOLE)\\b",
       "name": "support.function.draw.syntec-macro"
+    },
+    {
+      "match": "\\b(BITAND|BITOR|BITXOR|BITNOT|INLIST|PI|DEG|RAD|MOD)\\b",
+      "name": "support.function.misc.syntec-macro"
     },
     {
       "match": "@[A-Za-z_][A-Za-z0-9_]*|@\\d+|@\\[[^\\]]+\\]",
@@ -117,7 +120,7 @@
       "name": "entity.name.function.mcode.syntec-macro"
     },
     {
-      "match": "\\bN\\d+\\b",
+      "match": "^\\s*N\\d+\\s*;",
       "name": "entity.name.label.syntec-macro"
     },
     {

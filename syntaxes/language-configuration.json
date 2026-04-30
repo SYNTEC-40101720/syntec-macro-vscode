@@ -23,13 +23,13 @@
   "folding": {
     "markers": {
       "start": "(?i)\\b(FOR|WHILE|REPEAT|IF|CASE)\\b",
-      "end": "(?i)\\b(END_FOR|END_WHILE|END_REPEAT|END_IF|END_CASE)\\b"
+      "end": "(?i)\\b(END_FOR|END_WHILE|END_REPEAT|END_IF|END_CASE|ENDFOR|ENDWHILE|ENDREPEAT|ENDIF|ENDCASE)\\b"
     }
   },
-  "wordPattern": "[#@]?[A-Za-z_][A-Za-z0-9_]*|#\\d+|@\\d+",
+  "wordPattern": "#\\[[^\\]]+\\]|@\\[[^\\]]+\\]|[#@]?[A-Za-z_][A-Za-z0-9_]*|#\\d+|@\\d+",
   "indentationRules": {
     "increaseIndentPattern": "\\b(IF|THEN|ELSE|ELSEIF|FOR|WHILE|DO|REPEAT|CASE)\\b",
-    "decreaseIndentPattern": "\\b(END_IF|END_FOR|END_WHILE|END_REPEAT|END_CASE|ELSE|ELSEIF)\\b"
+    "decreaseIndentPattern": "\\b(END_IF|END_FOR|END_WHILE|END_REPEAT|END_CASE|ENDIF|ENDFOR|ENDWHILE|ENDREPEAT|ENDCASE|ELSE|ELSEIF)\\b"
   },
   "onEnterRules": [
     {
@@ -37,7 +37,7 @@
       "action": { "indent": "indent" }
     },
     {
-      "beforeText": "\\b(END_IF|END_FOR|END_WHILE|END_REPEAT|END_CASE)\\b.*$",
+      "beforeText": "\\b(END_IF|END_FOR|END_WHILE|END_REPEAT|END_CASE|ENDIF|ENDFOR|ENDWHILE|ENDREPEAT|ENDCASE)\\b.*$",
       "action": { "indent": "outdent" }
     }
   ]

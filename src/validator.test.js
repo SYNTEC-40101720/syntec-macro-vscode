@@ -1,4 +1,4 @@
-// validator.test.js - syntec-macro v1.3.5
+// validator.test.js - syntec-macro v1.4.1
 // 用法: node validator.test.js
 // 测试覆盖: IF/END_IF配对、CASE/END_CASE、REPEAT/UNTIL、中文字符检测、括号匹配、替代关键字、EXIT、GOTO、%@MACRO
 
@@ -182,6 +182,8 @@ console.log('\n[9] 中文字符检测');
     [['error', '中文标点']]);
   eq('注释内中文字符不报错', '// 中文注释', []);
   eq('块注释内中文字符不报错', '(* 中文 *)', []);
+  eq('块注释结束后的中文字符仍报错', '(* 中文 *) 加工=1',
+    [['error', '中文字符']]);
   eq('注释行首含中文标点不报错', '// ；中文', []);
   // 字符串内 CJK 不报错（合法用法：宏程序可输出中文消息）
   eq('字符串内中文不报错（合法用法）', 'MSG("你好")', []);
@@ -230,16 +232,19 @@ console.log('\n[12] GOTO 标签');
   eq('GOTO 不影响 IF 配对（目标N100存在，IF正常闭合）',
     'IF #1=1 THEN\nGOTO 100\nEND_IF\nN100;',
     []);
-  eq('GOTO N变量 目标存在不报错',
+  eq('GOTO #变量 为运行期目标，不做静态标签存在性校验',
     'N10;\nGOTO #10;\nN20;',
     []);
-  eq('GOTO N变量 目标不存在报 warning',
+  eq('GOTO #变量 即使当前文件无同号标签也不报目标不存在',
     'GOTO #10;',
-    [['warning', 'GOTO 目标 10 不存在']]);
+    []);
   eq('GOTO 标签不存在报 warning',
     'GOTO 99;',
     [['warning', 'GOTO 目标 99 不存在']]);
   eq('GOTO 标签存在不报错', 'N99;\nGOTO 99;', []);
+  eq('GOTO 100 不应把 N1000 当作目标',
+    'N1000;\nGOTO 100;',
+    [['warning', 'GOTO 目标 100 不存在']]);
 }
 
 // ============================================================

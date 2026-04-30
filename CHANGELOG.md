@@ -1,3 +1,34 @@
+## [1.4.1] - 2026-04-30
+
+### 编辑体验与发布流程修复
+
+**配置开关生效**
+- `syntecMacro.enableDiagnostics` 关闭时会清除并停止刷新诊断
+- `syntecMacro.enableCompletions`、`syntecMacro.enableHover` 现在会实际控制补全与 Hover Provider
+- 配置变更后会重新刷新当前已打开的 syntec-macro 文档诊断
+
+**补全、Hover 与跳转修复**
+- G/M 代码补全改为按前缀过滤，支持 `G0`、`G66`、`M9` 等输入过程继续收窄候选
+- `#` 变量补全不再被普通 word 检测提前拦截
+- 变量 Hover 支持 `#1`、`#name`、`#[...]`、`@100`、`@[...]`
+- G/M Hover 支持 `G66.1` 等带小数点的 G 代码
+- `GOTO 100` 跳转严格匹配 `N100;`，避免误跳到 `N1000;`
+- `G65 Pxxx` 宏程序跳转支持递归搜索工作区子目录，并匹配无扩展名、`.macro`、`.G`、`.scp`
+
+**语法、生成脚本与诊断修复**
+- 移除 TextMate 普通圆括号注释规则，避免表达式括号被误高亮为注释
+- 同步 `language-configuration.json` 的折叠、缩进与变量 wordPattern
+- `build/build_grammar.py` 与 `build/build_snippets.py` 输出目录改为仓库根下的 `syntaxes/`、`snippets/`
+- `GOTO #变量` 视为运行期目标，不再静态校验为同号 N 标签
+- 中文字符扫描会继续检查同行块注释结束后的代码
+- 补充动态 GOTO、N 标签边界和块注释后中文字符检测回归测试
+
+**版本一致性**
+- 状态栏与激活日志统一从 `package.json` 读取版本号
+- 移除无效的 VS Code `configurationDefaults` 注释配置键
+
+---
+
 ## [1.4.0] - 2026-04-20
 
 ### 重大修订：数据源全面对齐控制器实测
