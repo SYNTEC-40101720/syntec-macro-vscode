@@ -10,7 +10,7 @@ dist/
 *.py
 *.ps1
 test_*
-src/validator.test.js
+tests/
 node_modules/
 __pycache__/
 .DS_Store

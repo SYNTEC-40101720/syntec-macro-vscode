@@ -2,7 +2,7 @@
 // 用法: node validator.test.js
 // 测试覆盖: IF/END_IF配对、CASE/END_CASE、REPEAT/UNTIL、中文字符检测、括号匹配、替代关键字、EXIT、GOTO、%@MACRO
 
-const { validateDocument } = require('./validator');
+const { validateDocument } = require('../src/validator');
 
 // 辅助: 按 severity 过滤
 function errors(text)   { return validateDocument(text).filter(d => d.severity === 'error'); }
