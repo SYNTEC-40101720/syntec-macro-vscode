@@ -56,10 +56,6 @@
       "name": "keyword.operator.comparison.syntec-macro"
     },
     {
-      "match": "=",
-      "name": "keyword.operator.assignment.syntec-macro"
-    },
-    {
       "match": "\\b(ABS|ACOS|ASIN|ATAN|ATAN2|COS|SIN|TAN|CEIL|FLOOR|ROUND|SQRT|EXP|LN|LOG|POW|MAX|MIN|SIGN|RANDOM)\\b",
       "name": "support.function.math.syntec-macro"
     },
@@ -124,7 +120,7 @@
       "name": "entity.name.label.syntec-macro"
     },
     {
-      "match": "\\bG65\\b",
+      "match": "\\bG65(?:\\.1)?\\b",
       "name": "keyword.other.call.syntec-macro"
     },
     {
